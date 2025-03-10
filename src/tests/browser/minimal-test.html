@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audio Learning Verification</title>
+  <style>
+    body { font-family: system-ui; padding: 20px; max-width: 800px; margin: 0 auto; }
+    .error { color: red; }
+    .success { color: green; }
+    pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+    .progress { color: blue; }
+    .metric-improved { color: green; font-weight: bold; }
+    .metric-declined { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Audio Learning Verification</h1>
+  
+  <div id="test-controls">
+    <h2>Verify Learning Progression</h2>
+    <input type="file" id="audioFile" accept="audio/*" />
+    <button onclick="testAudioLearning()">Test Learning</button>
+    <div id="status"></div>
+    <div id="results"></div>
+  </div>
+
+  <script>
+    class BrowserAudioTest {
+      constructor() {
+        this.audioContext = null;
+      }
+
+      async initAudioContext() {
+        if (!this.audioContext) {
+          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (this.audioContext.state === 'suspended') {
+          await this.audioContext.resume();
+        }
+        return this.audioContext;
+      }
+
+      async testAudioLearning() {
+        const fileInput = document.getElementById('audioFile');
+        const file = fileInput.files[0];
+        
+        if (!file) {
+          this.updateStatus('Please select an audio file', 'error');
+          return;
+        }
+
+        try {
+          // Initial processing
+          this.updateStatus('Processing audio for first time...', 'progress');
+          const result1 = await this.processAudioFile(file);
+          
+          // Second processing of same file
+          this.updateStatus('Processing audio second time...', 'progress');
+          const result2 = await this.processAudioFile(file);
+
+          // Compare and display results
+          this.displayLearningResults(result1, result2);
+
+        } catch (error) {
+          this.updateStatus(`Test failed: ${error.message}`, 'error');
+          console.error('Test error:', error);
+        }
+      }
+
+      async processAudioFile(file) {
+        const audioContext = await this.initAudioContext();
+        const arrayBuffer = await file.arrayBuffer();
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+        // Process through our learning system
+        const result = await window.audioManager.processAudio({
+          id: file.name,
+          path: file.name,
+          size: file.size,
+          format: file.type.split('/')[1],
+          buffer: audioBuffer
+        });
+
+        return result;
+      }
+
+      displayLearningResults(firstRun, secondRun) {
+        const resultsDiv = document.getElementById('results');
+        
+        const compareMetric = (name, first, second) => {
+          const improved = second > first;
+          return `
+            <div class="${improved ? 'metric-improved' : 'metric-declined'}">
+              ${name}: ${first.toFixed(2)} → ${second.toFixed(2)}
+              ${improved ? '✓' : '✗'}
+            </div>
+          `;
+        };
+
+        const learningProgress = `
+          <h3>Learning Progress</h3>
+          ${compareMetric(
+            'Pattern Recognition Rate',
+            firstRun.learningMetrics.patternRecognitionRate,
+            secondRun.learningMetrics.patternRecognitionRate
+          )}
+          ${compareMetric(
+            'Average Confidence',
+            firstRun.learningMetrics.averageConfidence,
+            secondRun.learningMetrics.averageConfidence
+          )}
+          <h4>First Run</h4>
+          <pre>${JSON.stringify(firstRun, null, 2)}</pre>
+          <h4>Second Run</h4>
+          <pre>${JSON.stringify(secondRun, null, 2)}</pre>
+        `;
+
+        resultsDiv.innerHTML = learningProgress;
+
+        // Update final status
+        const improved = secondRun.learningMetrics.patternRecognitionRate > 
+                        firstRun.learningMetrics.patternRecognitionRate;
+        this.updateStatus(
+          improved ? 'Learning verified: Performance improved!' : 'Learning verification failed: No improvement detected',
+          improved ? 'success' : 'error'
+        );
+      }
+
+      updateStatus(message, type) {
+        const statusDiv = document.getElementById('status');
+        statusDiv.className = type;
+        statusDiv.textContent = message;
+      }
+    }
+
+    // Initialize test handler
+    const browserTest = new BrowserAudioTest();
+
+    // Global test function
+    async function testAudioLearning() {
+      await browserTest.testAudioLearning();
+    }
+  </script>
+</body>
+</html>

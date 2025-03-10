@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Monitor Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <h1>Performance Monitor</h1>
+            <div class="controls">
+                <button id="startMonitoring" class="btn btn-primary">Start Monitoring</button>
+                <button id="stopMonitoring" class="btn btn-danger" disabled>Stop Monitoring</button>
+            </div>
+        </header>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <h3>CPU Usage</h3>
+                <div class="chart-container">
+                    <canvas id="cpuChart"></canvas>
+                </div>
+                <div class="metric-stats">
+                    <span class="stat">Current: <span id="cpuCurrent">0%</span></span>
+                    <span class="stat">Average: <span id="cpuAvg">0%</span></span>
+                    <span class="stat">Peak: <span id="cpuPeak">0%</span></span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <h3>Memory Usage</h3>
+                <div class="chart-container">
+                    <canvas id="memoryChart"></canvas>
+                </div>
+                <div class="metric-stats">
+                    <span class="stat">Current: <span id="memCurrent">0 MB</span></span>
+                    <span class="stat">Available: <span id="memAvailable">0 MB</span></span>
+                    <span class="stat">Peak: <span id="memPeak">0 MB</span></span>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <h3>System Load</h3>
+                <div class="chart-container">
+                    <canvas id="loadChart"></canvas>
+                </div>
+                <div class="metric-stats">
+                    <span class="stat">Current: <span id="loadCurrent">0</span></span>
+                    <span class="stat">Average: <span id="loadAvg">0</span></span>
+                    <span class="stat">Trend: <span id="loadTrend">stable</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="monitoring-section">
+            <div class="alerts-panel">
+                <h3>Active Alerts</h3>
+                <div id="alertsList" class="alerts-list"></div>
+            </div>
+
+            <div class="history-panel">
+                <h3>Performance History</h3>
+                <div class="chart-container">
+                    <canvas id="historyChart"></canvas>
+                </div>
+                <div class="history-controls">
+                    <select id="historyMetric">
+                        <option value="cpu">CPU Usage</option>
+                        <option value="memory">Memory Usage</option>
+                        <option value="load">System Load</option>
+                    </select>
+                    <select id="historyPeriod">
+                        <option value="1h">Last Hour</option>
+                        <option value="24h">Last 24 Hours</option>
+                        <option value="7d">Last 7 Days</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="violations-panel">
+            <h3>Threshold Violations</h3>
+            <div class="violations-list" id="violationsList"></div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js" type="module"></script>
+</body>
+</html>

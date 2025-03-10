@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audio Learning System Browser Tests</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    #test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #controls {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+
+    #results {
+      margin-top: 20px;
+    }
+
+    .test-result {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    .test-result.passed {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+    }
+
+    .test-result.failed {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+    }
+
+    .metrics {
+      font-family: monospace;
+      white-space: pre-wrap;
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    button:disabled {
+      background: #6c757d;
+      cursor: not-allowed;
+    }
+
+    .progress {
+      margin-top: 10px;
+      height: 20px;
+      background: #e9ecef;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: #007bff;
+      transition: width 0.3s ease;
+    }
+
+    #summary {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e9ecef;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="test-container">
+    <h1>Audio Learning System Browser Tests</h1>
+    
+    <div id="controls">
+      <button id="runTests" onclick="startTests()">Run All Tests</button>
+      <button id="clearResults" onclick="clearResults()">Clear Results</button>
+      <div class="progress">
+        <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div id="results"></div>
+    <div id="summary"></div>
+  </div>
+
+  <script>
+    // Import our test dependencies
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.type = 'module';
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+
+    async function initializeTests() {
+      try {
+        await loadScript('./dist/test-runner.js');
+        await loadScript('./dist/test-scenarios.js');
+        console.log('Test infrastructure loaded successfully');
+      } catch (error) {
+        console.error('Failed to load test infrastructure:', error);
+        document.getElementById('results').innerHTML = 
+          `<div class="test-result failed">Failed to load test infrastructure: ${error.message}</div>`;
+      }
+    }
+
+    async function startTests() {
+      const runButton = document.getElementById('runTests');
+      const progressBar = document.getElementById('progressBar');
+      const resultsDiv = document.getElementById('results');
+      const summaryDiv = document.getElementById('summary');
+
+      runButton.disabled = true;
+      resultsDiv.innerHTML = '';
+      summaryDiv.innerHTML = '';
+      progressBar.style.width = '0%';
+
+      try {
+        const report = await window.testRunner.runTests();
+        
+        // Display results
+        report.results.forEach((result, index) => {
+          const progress = ((index + 1) / report.results.length) * 100;
+          progressBar.style.width = `${progress}%`;
+
+          const resultDiv = document.createElement('div');
+          resultDiv.className = `test-result ${result.passed ? 'passed' : 'failed'}`;
+          resultDiv.innerHTML = `
+            <h3>${result.name}</h3>
+            <p>Status: ${result.passed ? 'Passed' : 'Failed'}</p>
+            <p>Duration: ${result.duration.toFixed(2)}ms</p>
+            ${result.error ? `<p>Error: ${result.error.message}</p>` : ''}
+            <div class="metrics">
+              <strong>Metrics:</strong>
+              ${JSON.stringify(result.metrics, null, 2)}
+            </div>
+          `;
+          resultsDiv.appendChild(resultDiv);
+        });
+
+        // Display summary
+        summaryDiv.innerHTML = `
+          <h2>Test Summary</h2>
+          <p>Total Tests: ${report.summary.total}</p>
+          <p>Passed: ${report.summary.passed}</p>
+          <p>Failed: ${report.summary.failed}</p>
+          <p>Skipped: ${report.summary.skipped}</p>
+          <p>Total Duration: ${report.summary.duration.toFixed(2)}ms</p>
+          <div class="metrics">
+            <strong>Aggregated Metrics:</strong>
+            ${JSON.stringify(report.metrics, null, 2)}
+          </div>
+        `;
+      } catch (error) {
+        resultsDiv.innerHTML += `
+          <div class="test-result failed">
+            <h3>Test Execution Failed</h3>
+            <p>Error: ${error.message}</p>
+          </div>
+        `;
+      } finally {
+        runButton.disabled = false;
+      }
+    }
+
+    function clearResults() {
+      document.getElementById('results').innerHTML = '';
+      document.getElementById('summary').innerHTML = '';
+      document.getElementById('progressBar').style.width = '0%';
+    }
+
+    // Initialize when page loads
+    window.addEventListener('load', initializeTests);
+  </script>
+</body>
+</html>

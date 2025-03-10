@@ -1,0 +1,23 @@
+{
+  "name": "grym-synth",
+  "version": "1.0.0",
+  "description": "grym-synth Backend Integration",
+  "main": "index.js",
+  "scripts": {
+    "test": "node scripts/run-all-tests.js",
+    "test:api": "node scripts/run-api-tests.js",
+    "test:visualization": "node scripts/run-visualization-tests.js",
+    "test:resource": "node scripts/run-resource-tests.js",
+    "test:performance": "node src/tests/performance/benchmarkTests.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2",
+    "axios-mock-adapter": "^1.22.0"
+  }
+}

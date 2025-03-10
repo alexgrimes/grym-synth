@@ -1,0 +1,227 @@
+<!-- Additional performance trend visualizations -->
+<div class="card">
+    <h2>Performance Trends</h2>
+    <div class="chart-grid">
+        <div class="chart-container">
+            <h3>Test Duration Trend</h3>
+            <canvas id="durationTrendChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Coverage Evolution</h3>
+            <canvas id="coverageTrendChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <h3>Memory Usage</h3>
+            <canvas id="memoryTrendChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Pattern Analysis</h2>
+    <div class="metrics-grid">
+        <div class="metric ${getPatternClass('testFailures')}">
+            <h3>Test Stability</h3>
+            <p>${data.patterns.testFailures.trend}</p>
+            <small>${data.patterns.testFailures.anomalies.length} anomalies detected</small>
+        </div>
+        <div class="metric ${getPatternClass('performance')}">
+            <h3>Performance Trend</h3>
+            <p>${data.patterns.performance.trend}</p>
+            <small>${formatDuration(data.trends.performance.avgTestDuration)} avg</small>
+        </div>
+        <div class="metric ${getPatternClass('coverage')}">
+            <h3>Coverage Stability</h3>
+            <p>${formatPercentage(data.patterns.coverage.stability)}%</p>
+            <small>${data.patterns.coverage.trend} trend</small>
+        </div>
+    </div>
+
+    <div class="recommendations">
+        <h3>Recommendations</h3>
+        <ul>
+            {{#each data.recommendations}}
+            <li class="recommendation">{{this}}</li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+
+<script>
+// Duration Trend Chart
+new Chart(document.getElementById('durationTrendChart'), {
+    type: 'line',
+    data: {
+        labels: data.timeSeries.testDuration.labels.map(formatDate),
+        datasets: [{
+            label: 'Test Duration',
+            data: data.timeSeries.testDuration.data,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.4,
+            fill: false
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Test Duration Over Time'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Duration (ms)'
+                }
+            }
+        }
+    }
+});
+
+// Coverage Trend Chart
+new Chart(document.getElementById('coverageTrendChart'), {
+    type: 'line',
+    data: {
+        labels: data.timeSeries.coverage.labels.map(formatDate),
+        datasets: [
+            {
+                label: 'Lines',
+                data: data.timeSeries.coverage.lines,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.4
+            },
+            {
+                label: 'Functions',
+                data: data.timeSeries.coverage.functions,
+                borderColor: 'rgb(54, 162, 235)',
+                tension: 0.4
+            },
+            {
+                label: 'Branches',
+                data: data.timeSeries.coverage.branches,
+                borderColor: 'rgb(153, 102, 255)',
+                tension: 0.4
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Coverage Metrics Over Time'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                    display: true,
+                    text: 'Coverage %'
+                }
+            }
+        }
+    }
+});
+
+// Memory Usage Chart
+new Chart(document.getElementById('memoryTrendChart'), {
+    type: 'line',
+    data: {
+        labels: data.timeSeries.performance.labels.map(formatDate),
+        datasets: [{
+            label: 'Heap Usage',
+            data: data.timeSeries.performance.memoryUsage,
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Memory Usage Trend'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Memory (MB)'
+                },
+                ticks: {
+                    callback: value => `${(value / (1024 * 1024)).toFixed(1)} MB`
+                }
+            }
+        }
+    }
+});
+
+function formatDate(timestamp) {
+    return new Date(timestamp).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function formatDuration(ms) {
+    if (ms < 1000) return `${ms}ms`;
+    return `${(ms / 1000).toFixed(2)}s`;
+}
+
+function formatPercentage(value) {
+    return (value * 100).toFixed(1);
+}
+
+function getPatternClass(type) {
+    const trends = {
+        improving: 'success',
+        stable: 'warning',
+        degrading: 'danger'
+    };
+    return trends[data.patterns[type].trend] || 'warning';
+}
+</script>
+
+<style>
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.recommendations {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 8px;
+}
+
+.recommendation {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.metric small {
+    display: block;
+    margin-top: 5px;
+    opacity: 0.8;
+}
+</style>
