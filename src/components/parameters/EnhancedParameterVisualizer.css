@@ -1,0 +1,260 @@
+.enhanced-parameter-visualizer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.parameter-bubble {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: float 4s infinite alternate;
+  transform-origin: center center;
+}
+
+/* Different animation positions for parameters */
+.parameter-bubble:nth-child(3n+1) {
+  animation-name: float1;
+}
+
+.parameter-bubble:nth-child(3n+2) {
+  animation-name: float2;
+}
+
+.parameter-bubble:nth-child(3n+3) {
+  animation-name: float3;
+}
+
+/* Different starting positions */
+.parameter-bubble:nth-child(5n) {
+  top: 20%;
+  left: 30%;
+}
+
+.parameter-bubble:nth-child(5n+1) {
+  top: 40%;
+  left: 60%;
+}
+
+.parameter-bubble:nth-child(5n+2) {
+  top: 70%;
+  left: 40%;
+}
+
+.parameter-bubble:nth-child(5n+3) {
+  top: 30%;
+  left: 70%;
+}
+
+.parameter-bubble:nth-child(5n+4) {
+  top: 60%;
+  left: 20%;
+}
+
+/* Animation keyframes for floating effect */
+@keyframes float1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(10px, -15px) scale(1.05); }
+  100% { transform: translate(-5px, 10px) scale(0.95); }
+}
+
+@keyframes float2 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-15px, -5px) scale(1.02); }
+  100% { transform: translate(10px, 15px) scale(0.98); }
+}
+
+@keyframes float3 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(15px, 10px) scale(1.03); }
+  100% { transform: translate(-10px, -10px) scale(0.97); }
+}
+
+/* Pulse animation for highlighted parameters */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(100, 180, 255, 0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(100, 180, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(100, 180, 255, 0); }
+}
+
+.parameter-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.parameter-value-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: height 0.3s ease;
+  z-index: 2;
+}
+
+.parameter-name {
+  position: relative;
+  font-size: 10px;
+  color: white;
+  text-align: center;
+  padding: 0 5px;
+  line-height: 1.2;
+  z-index: 3;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+  user-select: none;
+}
+
+/* Category styles */
+.parameter-bubble.stochastic .parameter-background {
+  background: radial-gradient(circle, rgba(100, 140, 255, 0.8), rgba(80, 120, 235, 0.9));
+}
+
+.parameter-bubble.granular .parameter-background {
+  background: radial-gradient(circle, rgba(100, 255, 140, 0.8), rgba(80, 235, 120, 0.9));
+}
+
+.parameter-bubble.spectral .parameter-background {
+  background: radial-gradient(circle, rgba(255, 140, 100, 0.8), rgba(235, 120, 80, 0.9));
+}
+
+.parameter-bubble.temporal .parameter-background {
+  background: radial-gradient(circle, rgba(100, 200, 255, 0.8), rgba(80, 180, 235, 0.9));
+}
+
+.parameter-bubble.rhythmic .parameter-background {
+  background: radial-gradient(circle, rgba(255, 100, 140, 0.8), rgba(235, 80, 120, 0.9));
+}
+
+/* Active state */
+.parameter-bubble.active {
+  z-index: 10;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Highlighted state */
+.parameter-bubble.highlighted {
+  z-index: 5;
+}
+
+/* Parameter tooltip */
+.parameter-tooltip {
+  position: fixed;
+  padding: 8px 12px;
+  background: rgba(20, 30, 50, 0.9);
+  border: 1px solid rgba(100, 140, 255, 0.4);
+  border-radius: 6px;
+  color: rgba(220, 230, 255, 0.9);
+  font-size: 12px;
+  max-width: 200px;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -100%);
+  transition: opacity 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Parameter detail panel */
+.parameter-detail-panel {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background: rgba(20, 30, 50, 0.9);
+  border: 1px solid rgba(100, 140, 255, 0.4);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+  to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+.detail-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: rgba(30, 40, 70, 0.8);
+  border-bottom: 1px solid rgba(100, 140, 255, 0.2);
+}
+
+.detail-panel-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(220, 230, 255, 0.9);
+}
+
+.close-detail-button {
+  background: none;
+  border: none;
+  color: rgba(200, 210, 255, 0.7);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.detail-panel-content {
+  padding: 15px;
+}
+
+.parameter-description {
+  margin: 0 0 15px 0;
+  font-size: 13px;
+  color: rgba(200, 210, 255, 0.8);
+  line-height: 1.4;
+}
+
+.parameter-value-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(200, 210, 255, 0.9);
+  font-size: 13px;
+}
+
+.parameter-value-control input[type="range"] {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(80, 100, 160, 0.3);
+  border-radius: 2px;
+  outline: none;
+}
+
+.parameter-value-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(100, 140, 255, 0.8);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.parameter-value-control input[type="range"]::-webkit-slider-thumb:hover {
+  background: rgba(100, 180, 255, 0.9);
+}
+
+.value-display {
+  width: 40px;
+  text-align: right;
+  font-family: monospace;
+}
