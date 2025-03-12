@@ -1,0 +1,30 @@
+{
+  "timestamp": "2025-03-12T06:05:17.419Z",
+  "results": {
+    "api": {
+      "success": false,
+      "output": null,
+      "error": "Command failed: node scripts/run-api-tests.js"
+    },
+    "visualization": {
+      "success": false,
+      "output": null,
+      "error": "Command failed: node scripts/run-visualization-tests.js"
+    },
+    "resource": {
+      "success": false,
+      "output": null,
+      "error": "Command failed: node scripts/run-resource-tests.js"
+    },
+    "performance": {
+      "success": false,
+      "output": null,
+      "error": "Command failed: node src/tests/performance/benchmarkTests.js"
+    }
+  },
+  "summary": {
+    "total": 4,
+    "passed": 0,
+    "failed": 4
+  }
+}

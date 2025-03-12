@@ -1,5 +1,4 @@
-import '@testing-library/jest-dom';
-import './types';
+require('@testing-library/jest-dom');
 
 class MockAudioContext {
   createGain() {
@@ -36,7 +35,7 @@ class MockAudioContext {
 }
 
 // Create mock WebGL context
-const mockWebGLRenderingContext = Object.assign({
+const mockWebGLRenderingContext = {
   canvas: null,
   drawingBufferWidth: 800,
   drawingBufferHeight: 600,
@@ -54,48 +53,58 @@ const mockWebGLRenderingContext = Object.assign({
   attachShader: jest.fn(),
   linkProgram: jest.fn(),
   useProgram: jest.fn()
-}, {});
+};
 
 // Setup global mocks
-Object.assign(global, {
-  AudioContext: MockAudioContext,
-  WebGLRenderingContext: mockWebGLRenderingContext,
-  requestAnimationFrame: (callback: FrameRequestCallback): number => {
-    return setTimeout(() => callback(performance.now()), 1000 / 60) as unknown as number;
-  },
-  cancelAnimationFrame: (handle: number): void => {
-    clearTimeout(handle);
-  },
-  ResizeObserver: class ResizeObserver {
-    constructor(callback: ResizeObserverCallback) {}
-    disconnect() {}
-    observe() {}
-    unobserve() {}
-  },
-  IntersectionObserver: class IntersectionObserver {
-    constructor(callback: IntersectionObserverCallback) {}
-    disconnect() {}
-    observe() {}
-    unobserve() {}
-    takeRecords() { return []; }
-  },
-  URL: {
-    createObjectURL: jest.fn(() => 'mock-url'),
-    revokeObjectURL: jest.fn()
-  },
-  performance: {
-    now: jest.fn(() => Date.now()),
-    mark: jest.fn(),
-    measure: jest.fn(),
-    getEntriesByName: jest.fn(() => []),
-    getEntriesByType: jest.fn(() => []),
-    clearMarks: jest.fn(),
-    clearMeasures: jest.fn()
-  }
-});
+global.AudioContext = MockAudioContext;
+global.WebGLRenderingContext = mockWebGLRenderingContext;
+
+// Mock requestAnimationFrame and cancelAnimationFrame
+global.requestAnimationFrame = function(callback) {
+  return setTimeout(function() {
+    callback(Date.now());
+  }, 1000 / 60);
+};
+
+global.cancelAnimationFrame = function(handle) {
+  clearTimeout(handle);
+};
+
+// Mock ResizeObserver
+global.ResizeObserver = class ResizeObserver {
+  constructor(callback) {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+};
+
+// Mock IntersectionObserver
+global.IntersectionObserver = class IntersectionObserver {
+  constructor(callback) {}
+  disconnect() {}
+  observe() {}
+  unobserve() {}
+  takeRecords() { return []; }
+};
+
+// Mock URL methods
+global.URL = global.URL || {};
+global.URL.createObjectURL = global.URL.createObjectURL || jest.fn(() => 'mock-url');
+global.URL.revokeObjectURL = global.URL.revokeObjectURL || jest.fn();
+
+// Mock performance
+global.performance = global.performance || {
+  now: jest.fn(() => Date.now()),
+  mark: jest.fn(),
+  measure: jest.fn(),
+  getEntriesByName: jest.fn(() => []),
+  getEntriesByType: jest.fn(() => []),
+  clearMarks: jest.fn(),
+  clearMeasures: jest.fn()
+};
 
 // Mock WebGL context creation
-HTMLCanvasElement.prototype.getContext = function(contextType: string) {
+HTMLCanvasElement.prototype.getContext = function(contextType) {
   if (contextType === 'webgl' || contextType === 'webgl2') {
     return mockWebGLRenderingContext;
   }

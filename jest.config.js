@@ -2,7 +2,7 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/src/test/setup/testEnvironment.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/test/setup/testEnvironment.js'],
   moduleNameMapper: {
     // Handle CSS imports
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
@@ -72,13 +72,6 @@ module.exports = {
   bail: false,
   notify: true,
   notifyMode: 'failure-change',
-  watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname'
-  ],
-  snapshotSerializers: [
-    'jest-serializer-html'
-  ],
   reporters: [
     'default',
     [
@@ -92,7 +85,5 @@ module.exports = {
         usePathForSuiteName: true
       }
     ]
-  ],
-  // Custom resolver for WebAssembly modules
-  resolver: '<rootDir>/src/test/setup/wasmResolver.js'
+  ]
 };

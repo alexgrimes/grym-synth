@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-03-12T06:05:20.366Z",
+  "results": {
+    "apiTests": {
+      "success": false
+    }
+  },
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1
+  }
+}
