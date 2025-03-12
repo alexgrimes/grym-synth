@@ -1,13 +1,9 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import ToastProvider from '@/components/providers/toast-provider';
-import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
+import React from 'react';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Audio Learning Hub',
-  description: 'Your personal audio development learning platform',
+  title: 'Grym-Synth: Gravitational Parameter Interface',
+  description: 'A physics-based interface for controlling audio parameters inspired by Xenakis\' stochastic music principles.',
 };
 
 export default function RootLayout({
@@ -17,12 +13,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ToastProvider>
-          <main className="flex min-h-screen flex-col">
-            {children}
-          </main>
-        </ToastProvider>
+      <body>
+        {children}
       </body>
     </html>
   );

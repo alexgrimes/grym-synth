@@ -1,0 +1,185 @@
+.pattern-card {
+  background-color: rgba(30, 40, 70, 0.7);
+  border-radius: 8px;
+  border: 1px solid rgba(100, 140, 255, 0.2);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+.pattern-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 10, 30, 0.2);
+  border-color: rgba(100, 180, 255, 0.4);
+}
+
+.card-thumbnail {
+  height: 100px;
+  background-color: rgba(20, 30, 50, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.waveform-preview {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  padding: 10px;
+}
+
+.waveform-bar {
+  flex: 1;
+  background-color: rgba(100, 180, 255, 0.6);
+  min-width: 1px;
+  transition: height 0.3s ease;
+}
+
+.pattern-category {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: white;
+}
+
+.pattern-category.stochastic {
+  background-color: rgba(100, 140, 255, 0.8);
+}
+
+.pattern-category.granular {
+  background-color: rgba(100, 255, 140, 0.8);
+}
+
+.pattern-category.spectral {
+  background-color: rgba(255, 140, 100, 0.8);
+}
+
+.pattern-category.textural {
+  background-color: rgba(180, 120, 255, 0.8);
+}
+
+.pattern-category.rhythmic {
+  background-color: rgba(255, 100, 140, 0.8);
+}
+
+.pattern-category.harmonic {
+  background-color: rgba(255, 200, 100, 0.8);
+}
+
+.pattern-category.atmospheric {
+  background-color: rgba(100, 200, 255, 0.8);
+}
+
+.pattern-category.custom {
+  background-color: rgba(150, 150, 150, 0.8);
+}
+
+.card-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.pattern-name {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(220, 230, 255, 0.9);
+  line-height: 1.2;
+  flex: 1;
+}
+
+.star-button {
+  background: none;
+  border: none;
+  color: rgba(200, 210, 255, 0.5);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.star-button:hover {
+  color: rgba(255, 220, 100, 0.8);
+}
+
+.star-button.starred {
+  color: rgba(255, 220, 100, 0.9);
+}
+
+.pattern-description {
+  color: rgba(200, 210, 255, 0.7);
+  font-size: 13px;
+  line-height: 1.4;
+  margin: 0 0 12px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.pattern-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.tag {
+  padding: 2px 6px;
+  background-color: rgba(80, 100, 160, 0.3);
+  border: 1px solid rgba(100, 140, 255, 0.2);
+  border-radius: 4px;
+  font-size: 11px;
+  color: rgba(200, 220, 255, 0.8);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.pattern-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pattern-date, .pattern-usage {
+  font-size: 11px;
+  color: rgba(180, 190, 220, 0.6);
+}
+
+.apply-button {
+  padding: 6px 12px;
+  background-color: rgba(80, 120, 255, 0.6);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.apply-button:hover {
+  background-color: rgba(100, 140, 255, 0.8);
+}

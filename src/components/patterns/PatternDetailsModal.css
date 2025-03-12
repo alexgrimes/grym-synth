@@ -1,0 +1,314 @@
+.pattern-details-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 15, 30, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  background-color: rgba(25, 35, 60, 0.95);
+  border: 1px solid rgba(100, 140, 255, 0.3);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: rgba(30, 40, 70, 0.9);
+  border-bottom: 1px solid rgba(100, 140, 255, 0.2);
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-title h2 {
+  margin: 0;
+  font-size: 18px;
+  color: rgba(220, 230, 255, 0.9);
+}
+
+.star-button {
+  background: none;
+  border: none;
+  color: rgba(200, 210, 255, 0.5);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.star-button:hover {
+  color: rgba(255, 220, 100, 0.8);
+}
+
+.star-button.starred {
+  color: rgba(255, 220, 100, 0.9);
+}
+
+.pattern-preview {
+  height: 120px;
+  background-color: rgba(20, 30, 50, 0.7);
+  padding: 10px;
+  border-bottom: 1px solid rgba(100, 140, 255, 0.1);
+}
+
+.waveform-container {
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.waveform-bar {
+  flex: 1;
+  background-color: rgba(100, 180, 255, 0.6);
+  min-width: 1px;
+  transition: height 0.3s ease;
+}
+
+.modal-tabs {
+  display: flex;
+  background-color: rgba(30, 40, 70, 0.8);
+  border-bottom: 1px solid rgba(100, 140, 255, 0.1);
+}
+
+.tab-button {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: rgba(200, 210, 255, 0.6);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+  color: rgba(220, 230, 255, 0.8);
+  background-color: rgba(40, 60, 100, 0.3);
+}
+
+.tab-button.active {
+  color: rgba(100, 180, 255, 0.9);
+  border-bottom-color: rgba(100, 180, 255, 0.8);
+  background-color: rgba(40, 60, 100, 0.2);
+}
+
+.tab-content {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.overview-tab, .parameters-tab, .analysis-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pattern-description-section h3,
+.pattern-details-section h3,
+.pattern-tags-section h3,
+.analysis-section h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: rgba(180, 200, 255, 0.8);
+}
+
+.pattern-description-section p {
+  margin: 0;
+  color: rgba(200, 210, 255, 0.8);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.detail-label {
+  width: 100px;
+  color: rgba(180, 190, 220, 0.7);
+  font-size: 13px;
+}
+
+.detail-value {
+  color: rgba(200, 220, 255, 0.9);
+  font-size: 13px;
+}
+
+.category-badge {
+  padding: 2px 6px;
+  background-color: rgba(80, 100, 160, 0.3);
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  padding: 3px 8px;
+  background-color: rgba(80, 100, 160, 0.3);
+  border: 1px solid rgba(100, 140, 255, 0.2);
+  border-radius: 4px;
+  font-size: 12px;
+  color: rgba(200, 220, 255, 0.8);
+}
+
+.no-tags {
+  color: rgba(180, 190, 220, 0.5);
+  font-size: 13px;
+  font-style: italic;
+}
+
+.parameters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.parameter-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.parameter-label {
+  width: 150px;
+  color: rgba(180, 200, 255, 0.8);
+  font-size: 13px;
+}
+
+.parameter-value-container {
+  flex: 1;
+  height: 16px;
+  background-color: rgba(40, 60, 100, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.parameter-value-bar {
+  height: 100%;
+  background: linear-gradient(to right, rgba(80, 120, 255, 0.6), rgba(100, 180, 255, 0.8));
+  transition: width 0.3s ease;
+}
+
+.parameter-value {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  color: rgba(220, 240, 255, 0.9);
+  font-size: 11px;
+  line-height: 16px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+.analysis-section {
+  background-color: rgba(40, 60, 100, 0.2);
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.analysis-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.analysis-label {
+  width: 100px;
+  color: rgba(180, 190, 220, 0.7);
+  font-size: 13px;
+}
+
+.analysis-value {
+  color: rgba(200, 220, 255, 0.9);
+  font-size: 13px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background-color: rgba(30, 40, 70, 0.8);
+  border-top: 1px solid rgba(100, 140, 255, 0.1);
+}
+
+.delete-button {
+  padding: 8px 16px;
+  background-color: rgba(255, 80, 80, 0.4);
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  border-radius: 4px;
+  color: rgba(255, 200, 200, 0.9);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.delete-button:hover {
+  background-color: rgba(255, 80, 80, 0.6);
+}
+
+.delete-button.confirm {
+  background-color: rgba(255, 60, 60, 0.7);
+  color: white;
+}
+
+.apply-button {
+  padding: 8px 20px;
+  background-color: rgba(80, 120, 255, 0.6);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.apply-button:hover {
+  background-color: rgba(100, 140, 255, 0.8);
+}

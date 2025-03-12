@@ -1,0 +1,106 @@
+.minimized-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+  padding: 0 16px;
+  background-color: rgba(15, 20, 35, 0.95);
+  border-bottom: 1px solid rgba(100, 140, 255, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.project-selector {
+  position: relative;
+}
+
+.project-button {
+  background: none;
+  border: none;
+  color: #e0e0ff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dropdown-arrow {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.project-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgba(20, 30, 50, 0.95);
+  border: 1px solid rgba(100, 140, 255, 0.3);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  min-width: 150px;
+}
+
+.project-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+}
+
+.project-item:hover {
+  background-color: rgba(100, 140, 255, 0.1);
+}
+
+.new-project {
+  border-top: 1px solid rgba(100, 140, 255, 0.2);
+  color: rgba(100, 200, 255, 0.9);
+}
+
+.header-center {
+  font-size: 12px;
+  color: rgba(200, 200, 255, 0.6);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.session-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: rgba(200, 200, 255, 0.6);
+}
+
+.session-time, .memory-usage, .parameter-count, .mode-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mode-indicator {
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.mode-indicator.analyze {
+  background-color: rgba(100, 100, 255, 0.1);
+  color: rgba(120, 120, 255, 0.9);
+}
+
+.mode-indicator.create {
+  background-color: rgba(100, 200, 100, 0.1);
+  color: rgba(120, 220, 120, 0.9);
+}

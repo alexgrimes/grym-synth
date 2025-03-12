@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      target: api
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - DB_PATH=/app/data/grymsynth.db
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
+      - MAX_MEMORY_PERCENT=60
+      - NODE_ENV=production
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    mem_limit: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - grymsynth-network
+
+  ollama:
+    build:
+      context: ./ollama
+      dockerfile: Dockerfile
+    volumes:
+      - ./models:/models
+      - ./ollama/model-config.json:/etc/ollama/models.json:ro
+    ports:
+      - "11434:11434"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    restart: unless-stopped
+    mem_limit: 3G  # Reduced from 4G to accommodate ZenBook constraints
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - grymsynth-network
+
+networks:
+  grymsynth-network:
+    driver: bridge
+
+volumes:
+  data:
+    driver: local
+  logs:
+    driver: local
+  models:
+    driver: local

@@ -1,0 +1,130 @@
+.grym-synth-interface {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: #0a0a14;
+  color: #e0e0ff;
+  overflow: hidden;
+  position: relative;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.visualization-container {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(10, 12, 20, 0.95);
+}
+
+.visualization-container canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.chat-container {
+  position: relative;
+  height: 30%;
+  min-height: 150px;
+  max-height: 300px;
+  border-top: 1px solid rgba(100, 140, 255, 0.3);
+  background-color: rgba(10, 14, 28, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .chat-container {
+    height: 40%;
+    max-height: 400px;
+  }
+
+  .visualization-container {
+    height: 60%;
+  }
+}
+
+@media (max-width: 480px) {
+  .minimized-header {
+    height: 48px;
+    padding: 0 8px;
+  }
+
+  .session-info {
+    gap: 8px;
+    font-size: 10px;
+  }
+
+  .project-button {
+    font-size: 12px;
+  }
+}
+
+/* Dark mode optimization */
+@media (prefers-color-scheme: dark) {
+  .grym-synth-interface {
+    background-color: #050508;
+  }
+
+  .visualization-container {
+    background-color: rgba(5, 6, 10, 0.95);
+  }
+
+  .chat-container {
+    background-color: rgba(5, 7, 14, 0.9);
+  }
+}
+
+/* Loading states */
+.visualization-container.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(100, 140, 255, 0.1);
+  border-top-color: rgba(100, 140, 255, 0.8);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Transition effects */
+.visualization-container {
+  transition: height 0.3s ease;
+}
+
+.chat-container {
+  transition: height 0.3s ease;
+}
+
+.mode-transition {
+  transition: opacity 0.3s ease;
+}
+
+.mode-transition.fade-out {
+  opacity: 0;
+}
+
+.mode-transition.fade-in {
+  opacity: 1;
+}

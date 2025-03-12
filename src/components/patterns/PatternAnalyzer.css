@@ -1,0 +1,181 @@
+.pattern-analyzer {
+  padding: 20px;
+  background-color: rgba(25, 35, 60, 0.7);
+  border-radius: 8px;
+  border: 1px solid rgba(100, 140, 255, 0.2);
+}
+
+.analyzer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.analyzer-header h2 {
+  margin: 0;
+  font-size: 18px;
+  color: rgba(220, 230, 255, 0.9);
+}
+
+.analyzer-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.analyze-button, .save-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.analyze-button {
+  background-color: rgba(80, 120, 255, 0.6);
+  border: none;
+  color: white;
+}
+
+.analyze-button:hover:not(:disabled) {
+  background-color: rgba(100, 140, 255, 0.8);
+}
+
+.analyze-button:disabled {
+  background-color: rgba(60, 80, 120, 0.4);
+  color: rgba(200, 200, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.save-button {
+  background-color: rgba(100, 200, 100, 0.6);
+  border: none;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: rgba(120, 220, 120, 0.8);
+}
+
+.analysis-progress {
+  margin-bottom: 20px;
+}
+
+.progress-bar-container {
+  height: 8px;
+  background-color: rgba(40, 60, 100, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, rgba(80, 120, 255, 0.7), rgba(100, 180, 255, 0.9));
+  transition: width 0.3s ease;
+}
+
+.progress-stage {
+  font-size: 13px;
+  color: rgba(180, 200, 255, 0.8);
+  text-align: center;
+}
+
+.analysis-result {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.result-section {
+  background-color: rgba(30, 40, 70, 0.6);
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.result-section h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: rgba(180, 200, 255, 0.9);
+  border-bottom: 1px solid rgba(100, 140, 255, 0.2);
+  padding-bottom: 8px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.result-label {
+  font-size: 12px;
+  color: rgba(180, 190, 220, 0.7);
+}
+
+.result-value {
+  font-size: 14px;
+  color: rgba(200, 220, 255, 0.9);
+}
+
+.parameters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.parameter-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.parameter-label {
+  width: 150px;
+  color: rgba(180, 200, 255, 0.8);
+  font-size: 13px;
+}
+
+.parameter-value-container {
+  flex: 1;
+  height: 16px;
+  background-color: rgba(40, 60, 100, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.parameter-value-bar {
+  height: 100%;
+  background: linear-gradient(to right, rgba(80, 120, 255, 0.6), rgba(100, 180, 255, 0.8));
+  transition: width 0.3s ease;
+}
+
+.parameter-value {
+  position: absolute;
+  right: 8px;
+  top: 0;
+  color: rgba(220, 240, 255, 0.9);
+  font-size: 11px;
+  line-height: 16px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+.waveform-preview {
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.waveform-bar {
+  flex: 1;
+  background-color: rgba(100, 180, 255, 0.6);
+  min-width: 1px;
+  transition: height 0.3s ease;
+}

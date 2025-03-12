@@ -4,6 +4,9 @@
   "description": "grym-synth Backend Integration",
   "main": "index.js",
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "test": "node scripts/run-all-tests.js",
     "test:api": "node scripts/run-api-tests.js",
     "test:visualization": "node scripts/run-visualization-tests.js",
@@ -11,7 +14,17 @@
     "test:performance": "node src/tests/performance/benchmarkTests.js"
   },
   "dependencies": {
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@types/sqlite3": "^3.1.11",
+    "@types/three": "^0.174.0",
     "axios": "^1.6.0",
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "three": "^0.174.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
