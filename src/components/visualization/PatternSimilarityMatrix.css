@@ -1,0 +1,78 @@
+.pattern-similarity-matrix {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.matrix-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.matrix-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.color-scale-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-scale-selector label {
+  font-size: 14px;
+  color: #666;
+}
+
+.scale-select {
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.similarity-matrix-canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+}
+
+.matrix-info {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.matrix-info p {
+  margin: 6px 0;
+}
+
+@media (max-width: 768px) {
+  .matrix-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .color-scale-selector {
+    width: 100%;
+  }
+  
+  .scale-select {
+    flex-grow: 1;
+  }
+}
